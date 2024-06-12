@@ -18,5 +18,9 @@ mv tomcat-service-name-testing.war apache-tomcat-10.1.24/webapps/
 cd apache-tomcat-10.1.24
 vim bin/catalina.sh
 <insert CATALINA_OPTS="-javaagent:/home/<user>/splunk-otel-javaagent-1.32.1.jar"
-
+curl -sSL https://dl.signalfx.com/splunk-otel-collector.sh > /tmp/splunk-otel-collector.sh && \
+  sudo sh /tmp/splunk-otel-collector.sh --with-instrumentation --realm us0 
+  --deployment-environment tctest -- "<your ingest token>"
+sh bin/catalina.sh start
+curl http://${TH}:8080/tomcat-service-name-testing/rawr
 ```
